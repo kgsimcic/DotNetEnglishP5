@@ -1,10 +1,15 @@
-﻿namespace CarHub.Data
+﻿using CarHub.Models;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+namespace CarHub.Data
 {
     public class Car
     {
         public int Id { get; set; }
         public string Make { get; set; }
         public string Model { get; set; }
+        [YearRange(1990, (int)DateTime.Now.Month, ErrorMessage = "Invalid Year entered; please enter a value in between 1990 and the current year.")]
         public int Year { get; set; }
         public string Trim { get; set; }
         public DateOnly PurchaseDate { get; set; }
