@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace CarHub.Data
 {
@@ -11,5 +12,6 @@ namespace CarHub.Data
         }
 
         public DbSet<Car> Cars { get; set; }
+        public DbSet<IdentityUser> Users { get; set; }
     }
 }

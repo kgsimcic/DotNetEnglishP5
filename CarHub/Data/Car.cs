@@ -9,7 +9,7 @@ namespace CarHub.Data
         public int Id { get; set; }
         public string Make { get; set; }
         public string Model { get; set; }
-        [YearRange(1990, (int)DateTime.Now.Month, ErrorMessage = "Invalid Year entered; please enter a value in between 1990 and the current year.")]
+// s[YearRange(1990, (int)DateTime.Now.Month, ErrorMessage = "Invalid Year entered; please enter a value in between 1990 and the current year.")]
         public int Year { get; set; }
         public string Trim { get; set; }
         public DateOnly PurchaseDate { get; set; }
@@ -20,6 +20,6 @@ namespace CarHub.Data
         public decimal SellingPrice { get; set; }
         public DateOnly? SaleDate { get; set; }
         public bool Available { get; set; }
-        public string? ImageUrl { get; set; }
+        public byte[] Image { get; set; }
     }
 }
