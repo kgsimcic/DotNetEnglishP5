@@ -103,15 +103,13 @@ namespace CarHub.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = "Views/Cars/Admin")
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             var errors = ModelState.Values.SelectMany(v => v.Errors);
-
-            _logger.LogInformation("User attempted to login.");
 
             if (ModelState.IsValid)
             {
@@ -121,7 +119,7 @@ namespace CarHub.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect("/Admin/");
                 }
                 if (result.RequiresTwoFactor)
                 {

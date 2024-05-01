@@ -22,8 +22,8 @@ namespace CarHub.Controllers
         // GET: Cars for buyers; should not see cars that are not available
         public async Task<IActionResult> Index()
         {
-            // var availableCars = _context.Cars.Where(x => x.Available = true);
-            return View(await _context.Cars.ToListAsync());
+            var availableCars = await _context.Cars.Where( x => (x.Available)).ToListAsync();
+            return View(availableCars);
         }
 
         // GET: Cars/Details/5
