@@ -50,7 +50,6 @@ namespace CarHub.Controllers
             return View(await _context.Cars.ToListAsync());
         }
 
-        [Authorize]
         // GET: Cars/Create
         public IActionResult Create()
         {
@@ -68,13 +67,12 @@ namespace CarHub.Controllers
             {
                 _context.Add(car);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Admin));
             }
             return View(car);
         }
 
         // GET: Cars/Edit/5
-        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,7 +93,7 @@ namespace CarHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available,Image")] Car car)
         {
             if (id != car.Id)
             {
@@ -120,13 +118,12 @@ namespace CarHub.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Admin));
             }
             return View(car);
         }
 
         // GET: Cars/Delete/5
-        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

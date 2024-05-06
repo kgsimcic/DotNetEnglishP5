@@ -119,7 +119,7 @@ namespace CarHub.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect("/Admin/");
+                    return LocalRedirect("/Cars/Admin/");
                 }
                 if (result.RequiresTwoFactor)
                 {

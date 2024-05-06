@@ -40,7 +40,7 @@
                 @Html.DisplayNameFor(model => model.SellingPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SaleDate)
+                @Html.DisplayNameFor(model => model.Image)
             </th>
             <th></th>
         </tr>
@@ -79,7 +79,7 @@
                 @Html.DisplayFor(modelItem => item.SellingPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SaleDate)
+                <img src="data:image;base64,@item.GetImageFromData(item.Image)" />
             </td>
         </tr>
 }

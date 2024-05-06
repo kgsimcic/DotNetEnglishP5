@@ -1,10 +1,11 @@
 ﻿using CarHub.Models;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Buffers.Text;
 
 namespace CarHub.Data
 {
-    public class Car
+    public partial class Car
     {
         public int Id { get; set; }
         public string Make { get; set; }
@@ -20,6 +21,19 @@ namespace CarHub.Data
         public decimal SellingPrice { get; set; }
         public DateOnly? SaleDate { get; set; }
         public bool Available { get; set; }
-        public byte[] Image { get; set; }
+        public byte[]? Image { get; set; }
+
+        public String GetImageFromData(byte[]? image)
+        {
+            if (image == null)
+            {
+                return "data:,";
+            }
+            else
+            {
+                return @Convert.ToBase64String(image);
+            }
+        }
     }
+
 }

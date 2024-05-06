@@ -34,7 +34,6 @@ namespace CarHub.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<byte[]>("Image")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<DateOnly?>("LotDate")

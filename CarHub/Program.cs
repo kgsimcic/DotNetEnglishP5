@@ -1,7 +1,8 @@
-using CarHub.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CarHub.Models;
+using CarHub.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +37,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// app.UseAuthorization();
+app.UseAuthorization();
+AdminData.EnsurePopulated(app);
 
 app.MapControllerRoute(
     name: "default",

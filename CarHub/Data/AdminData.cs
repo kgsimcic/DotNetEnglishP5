@@ -1,3 +1,4 @@
+using CarHub.Areas.Identity.Pages.Account;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
@@ -5,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 
 
-namespace P3AddNewFunctionalityDotNetCore.Data
+namespace CarHub.Data
 {
     public static class AdminData
     {
