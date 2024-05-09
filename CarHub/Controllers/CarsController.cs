@@ -45,6 +45,7 @@ namespace CarHub.Controllers
             return View(car);
         }
 
+        [Authorize]
         // GET: Cars for Admin View
         public async Task<IActionResult> Admin()
         {
