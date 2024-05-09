@@ -1,13 +1,13 @@
-﻿@model CarHub.Data.Car
+﻿@model CarHub.Models.CarViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>View</h1>
 
 <div>
-    <h4>Car</h4>
+    <h4>CarViewModel</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -58,10 +58,10 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.RepairCost)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.LotDate)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LotDate)
         </dd>
         <dt class = "col-sm-2">
@@ -76,22 +76,21 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SaleDate)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Available)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Available)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Image)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Image)
         </dd>
-
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Admin">Back to List</a>
 </div>

@@ -1,11 +1,10 @@
-﻿@model IEnumerable<CarHub.Data.Car>
+﻿@model IEnumerable<CarHub.Models.CarViewModel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1 style="text-align:center;">Inventory</h1>
-
+<h1>All Available Cars</h1>
 <table class="table">
     <thead>
         <tr>
@@ -39,10 +38,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.SellingPrice)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -78,10 +73,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SellingPrice)
             </td>
-            <td>
-                <img src="data:image;base64,@item.GetImageFromData(item.Image)" />
-            </td>
         </tr>
-}
+        }
     </tbody>
 </table>

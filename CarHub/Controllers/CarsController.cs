@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using CarHub.Models;
 using CarHub.Data;
 using Microsoft.AspNetCore.Authorization;
 
@@ -22,7 +23,7 @@ namespace CarHub.Controllers
         // GET: Cars for buyers; should not see cars that are not available
         public async Task<IActionResult> Index()
         {
-            var availableCars = await _context.Cars.Where( x => (x.Available)).ToListAsync();
+            var availableCars = await _context.CarViewModel.Where( x => (x.Available)).ToListAsync();
             return View(availableCars);
         }
 
@@ -34,7 +35,7 @@ namespace CarHub.Controllers
                 return NotFound();
             }
 
-            var car = await _context.Cars
+            var car = await _context.CarViewModel
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
@@ -47,7 +48,7 @@ namespace CarHub.Controllers
         // GET: Cars for Admin View
         public async Task<IActionResult> Admin()
         {
-            return View(await _context.Cars.ToListAsync());
+            return View(await _context.CarViewModel.ToListAsync());
         }
 
         // GET: Cars/Create
@@ -61,7 +62,7 @@ namespace CarHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate")] Car car)
+        public async Task<IActionResult> Create([Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available,Image")] CarViewModel car)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +81,7 @@ namespace CarHub.Controllers
                 return NotFound();
             }
 
-            var car = await _context.Cars.FindAsync(id);
+            var car = await _context.CarViewModel.FindAsync(id);
             if (car == null)
             {
                 return NotFound();
@@ -93,7 +94,7 @@ namespace CarHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available,Image")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available,Image")] CarViewModel car)
         {
             if (id != car.Id)
             {
@@ -131,7 +132,7 @@ namespace CarHub.Controllers
                 return NotFound();
             }
 
-            var car = await _context.Cars
+            var car = await _context.CarViewModel
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
@@ -141,15 +142,15 @@ namespace CarHub.Controllers
             return View(car);
         }
 
-        // POST: Cars/Delete/5
+        // POST: CarViewModel/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var car = await _context.Cars.FindAsync(id);
+            var car = await _context.CarViewModel.FindAsync(id);
             if (car != null)
             {
-                _context.Cars.Remove(car);
+                _context.CarViewModel.Remove(car);
             }
 
             await _context.SaveChangesAsync();
@@ -158,7 +159,7 @@ namespace CarHub.Controllers
 
         private bool CarExists(int id)
         {
-            return _context.Cars.Any(e => e.Id == id);
+            return _context.CarViewModel.Any(e => e.Id == id);
         }
     }
 }

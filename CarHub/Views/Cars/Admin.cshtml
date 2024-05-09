@@ -1,10 +1,10 @@
-﻿@model IEnumerable<CarHub.Data.Car>
+﻿@model IEnumerable<CarHub.Models.CarViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Admin";
 }
 
-<h1 style="text-align:center;">Inventory</h1>
+<h1>All Cars</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -97,11 +97,12 @@
                 @Html.DisplayFor(modelItem => item.Image)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
+
 }
     </tbody>
 </table>

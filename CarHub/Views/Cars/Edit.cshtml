@@ -1,4 +1,4 @@
-﻿@model CarHub.Data.Car
+﻿@model CarHub.Models.CarViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +6,7 @@
 
 <h1>Edit</h1>
 
-<h4>Car</h4>
+<h4>CarViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -68,15 +68,14 @@
                 <input asp-for="SaleDate" class="form-control" />
                 <span asp-validation-for="SaleDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Available" class="control-label"></label>
-                <input asp-for="Available" type="checkbox"/>
-                <span asp-validation-for="Available" class="text-danger"></span>
-
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Available" /> @Html.DisplayNameFor(model => model.Available)
+                </label>
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" type="file" name="Image" id="Image" onchange="fileCheck(this);" class="form-control" />
+                <input asp-for="Image" type="file" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
