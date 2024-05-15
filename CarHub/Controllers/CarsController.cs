@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CarHub.Models;
 using CarHub.Data;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection.Metadata;
 
 namespace CarHub.Controllers
 {
@@ -63,10 +64,23 @@ namespace CarHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available,Image")] CarViewModel car)
+        public async Task<IActionResult> Create([Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available")] CarViewModel car, IFormFile img)
         {
             if (ModelState.IsValid)
             {
+                if (img != null && img.Length > 0)
+                {
+                    // Convert the uploaded image to a byte array
+                    byte[]? imageBytes;
+                    using (var stream = new MemoryStream())
+                    {
+                        await img.CopyToAsync(stream);
+                        imageBytes = stream.ToArray();
+                    }
+
+                    car.Image = imageBytes;
+                }
+
                 _context.Add(car);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Admin));
@@ -95,17 +109,33 @@ namespace CarHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available,Image")] CarViewModel car)
+        public async Task<IActionResult> Edit(int id, IFormFile img, [Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available")] CarViewModel car)
         {
             if (id != car.Id)
             {
                 return NotFound();
             }
 
+            
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    if (img != null && img.Length > 0)
+                    {
+                        // Convert the uploaded image to a byte array
+                        byte[]? imageBytes;
+                        using (var stream = new MemoryStream())
+                        {
+                            await img.CopyToAsync(stream);
+                            imageBytes = stream.ToArray();
+                        }
+
+                        car.Image = imageBytes;
+                    }
+
+
                     _context.Update(car);
                     await _context.SaveChangesAsync();
                 }
