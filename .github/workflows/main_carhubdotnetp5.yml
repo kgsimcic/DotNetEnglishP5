@@ -22,8 +22,16 @@ jobs:
           dotnet-version: '8.x'
           include-prerelease: true
 
+      - name: Set up dependency caching for faster builds
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       - name: Build with dotnet
-        run: dotnet build Carhub/Carhub.csproj --configuration --project Release
+        run: dotnet build --configuration --project Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
