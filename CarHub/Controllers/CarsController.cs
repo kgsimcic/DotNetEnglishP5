@@ -64,22 +64,27 @@ namespace CarHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormFile img, [Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available")] CarViewModel car)
+        public async Task<IActionResult> Create(IFormFile? img, [Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available")] CarViewModel car)
         {
+            if (img != null)
+            {
+                // Convert the uploaded image to a byte array
+                byte[]? imageBytes;
+                using (var stream = new MemoryStream())
+                {
+                    await img.CopyToAsync(stream);
+                    imageBytes = stream.ToArray();
+                }
+
+                car.Image = imageBytes;
+            }
+            else
+            {
+                car.Image = Array.Empty<byte>();
+            }
+
             if (ModelState.IsValid)
             {
-                if (img != null && img.Length > 0)
-                {
-                    // Convert the uploaded image to a byte array
-                    byte[]? imageBytes;
-                    using (var stream = new MemoryStream())
-                    {
-                        await img.CopyToAsync(stream);
-                        imageBytes = stream.ToArray();
-                    }
-
-                    car.Image = imageBytes;
-                }
 
                 _context.Add(car);
                 await _context.SaveChangesAsync();
@@ -109,33 +114,34 @@ namespace CarHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, IFormFile img, [Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available")] CarViewModel car)
+        public async Task<IActionResult> Edit(int id, IFormFile? img, [Bind("Id,Make,Model,Year,Trim,PurchaseDate,PurchasePrice,Repairs,RepairCost,LotDate,SellingPrice,SaleDate,Available")] CarViewModel car)
         {
             if (id != car.Id)
             {
                 return NotFound();
             }
 
-            
+            if (img != null) 
+            {
+                // Convert the uploaded image to a byte array
+                byte[]? imageBytes;
+                using (var stream = new MemoryStream())
+                {
+                    await img.CopyToAsync(stream);
+                    imageBytes = stream.ToArray();
+                }
+
+                car.Image = imageBytes;
+            }
+            else
+            {
+                car.Image = Array.Empty<byte>();
+            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (img != null && img.Length > 0)
-                    {
-                        // Convert the uploaded image to a byte array
-                        byte[]? imageBytes;
-                        using (var stream = new MemoryStream())
-                        {
-                            await img.CopyToAsync(stream);
-                            imageBytes = stream.ToArray();
-                        }
-
-                        car.Image = imageBytes;
-                    }
-
-
                     _context.Update(car);
                     await _context.SaveChangesAsync();
                 }
