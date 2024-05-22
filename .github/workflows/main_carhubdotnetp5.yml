@@ -62,5 +62,5 @@ jobs:
         with:
           app-name: 'CarhubDotNetP5'
           slot-name: 'Production'
-          package: .Carhub/
+          package: '.Carhub/'
           
