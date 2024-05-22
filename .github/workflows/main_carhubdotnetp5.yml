@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build ./Carhub/Carhub.csproj --configuration Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
@@ -70,5 +70,5 @@ jobs:
         with:
           app-name: 'CarhubDotNetP5'
           slot-name: 'Production'
-          package: '.Carhub/'
+          package: '.'
           
