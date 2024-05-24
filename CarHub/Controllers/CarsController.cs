@@ -9,6 +9,7 @@ using CarHub.Models;
 using CarHub.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Reflection.Metadata;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CarHub.Controllers
 {
@@ -19,6 +20,17 @@ namespace CarHub.Controllers
         public CarsController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        private void ValidateSellingPrice(CarViewModel car)
+        {
+            var purchasePrice = car.PurchasePrice;
+            var repairCost = car.RepairCost ?? 0;
+            var minPrice = purchasePrice + repairCost + 500;
+            if (car.SellingPrice < minPrice)
+            {
+                ModelState.AddModelError("SellingPrice", $"Selling price is too low to make a profit. Please select a price of at least the sum of the purchase price, repair cost, and $500 (Current value is ${minPrice}).");
+            }
         }
 
         // GET: Cars for buyers; should not see cars that are not available
@@ -83,14 +95,18 @@ namespace CarHub.Controllers
                 car.Image = Array.Empty<byte>();
             }
 
+            ValidateSellingPrice(car);
+
             if (ModelState.IsValid)
             {
-
                 _context.Add(car);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Admin));
             }
-            return View(car);
+            else
+            {
+                return View(car);
+            }
         }
 
         // GET: Cars/Edit/5
@@ -138,6 +154,8 @@ namespace CarHub.Controllers
                 car.Image = Array.Empty<byte>();
             }
 
+            ValidateSellingPrice(car);
+
             if (ModelState.IsValid)
             {
                 try
@@ -157,8 +175,10 @@ namespace CarHub.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Admin));
+            } else
+            {
+                return View(car);
             }
-            return View(car);
         }
 
         // GET: Cars/Delete/5
